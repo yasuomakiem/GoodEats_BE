@@ -2,6 +2,8 @@
 
 import { Expose } from "class-transformer";
 import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { Restaurant } from "src/restaurant/entities/restaurant.entity";
+import { OneToMany } from "typeorm";
 
 export default class UserDto {
   @IsNotEmpty()
@@ -34,4 +36,5 @@ export default class UserDto {
 
   @IsNotEmpty()
   role: string;
+
 }
