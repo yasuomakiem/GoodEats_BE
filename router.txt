@@ -1,0 +1,10 @@
+/api/user/ ->  
+
+-> /login
+ -> return User
+-> /register 
+  -> Return err | 200
+-> /edit 
+  -> Return err | 200
+ 
+

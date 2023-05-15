@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Res } from "@nestjs/common";
+import { Restaurant } from "src/restaurant/entities/restaurant.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name : 'user'})
 export class UserEntity{
@@ -62,4 +64,7 @@ export class UserEntity{
         
     })
     role: string;
+    
+    @OneToMany(() => Restaurant, (res) => res.user)
+    rest: Restaurant[]
 }
