@@ -33,13 +33,17 @@ export class RestaurantService {
     return this.resRepository.save(newRes);
   }
 
-  async findAll():Promise<Restaurant[]> {
-    return await this.resRepository.find({relations:['users']});
+  getAllRes(): Promise<Restaurant[]> {
+    return this.resRepository.find({
+      relations: ['users'],
+    });
   }
 
-  async findOne(id: number):Promise<Restaurant> {
-    return await this.resRepository.findOne({where: {id: id}}  )
-  }
+  // async findAll():Promise<Restaurant[]> {
+  //   return await this.resRepository.find({relations:['users']});
+  // }
+
+    
 
   async update(id: number, updateRestaurantDto: UpdateRestaurantDto):Promise<UpdateResult>  {
     return await this.resRepository.update(id,updateRestaurantDto);

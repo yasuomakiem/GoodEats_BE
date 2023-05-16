@@ -1,6 +1,6 @@
 import { UserEntity as User} from 'src/user/user.entiy/user.entity';
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany, OneToOne, ManyToOne } from 'typeorm';
-
+import {Voucher} from 'src/voucher/entities/voucher.entity'
 @Entity({
   name: 'restaurant',
 })
@@ -46,5 +46,8 @@ export class Restaurant {
 
     @ManyToOne(() => User, (user) => user.rest)
     user: User;
+
+    @OneToMany(() => Voucher, (voucher) => voucher.res)
+    vc: Voucher[]
 
 }
