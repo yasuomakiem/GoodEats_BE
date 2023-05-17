@@ -52,6 +52,7 @@ export class AuthService {
     }> {
         const payload = {
             subject: username,
+            
         };
         const accessToken = await this.jwtService.signAsync(payload, {
             expiresIn: '30m',

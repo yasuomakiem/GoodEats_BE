@@ -1,6 +1,7 @@
 import { UserEntity as User} from 'src/user/user.entiy/user.entity';
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany, OneToOne, ManyToOne } from 'typeorm';
 import {Voucher} from 'src/voucher/entities/voucher.entity'
+import { Product } from 'src/product/entities/product.entity';
 @Entity({
   name: 'restaurant',
 })
@@ -49,5 +50,8 @@ export class Restaurant {
 
     @OneToMany(() => Voucher, (voucher) => voucher.res)
     vc: Voucher[]
+
+    @OneToMany(() => Product, (prod) => prod.res)
+    prod: Product[]
 
 }
