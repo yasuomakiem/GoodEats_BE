@@ -1,3 +1,4 @@
+import { Order } from 'src/order/entities/order.entity';
 import {Restaurant} from 'src/restaurant/entities/restaurant.entity'
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany, OneToOne, ManyToOne } from 'typeorm';
 
@@ -28,5 +29,7 @@ export class Voucher{
     @ManyToOne(() => Restaurant, (restaurant) => restaurant.vc)
     res: Restaurant;
 
+    @OneToMany(()=>Order, (ord) => ord.vou)
+    ord: Order
 
 }
