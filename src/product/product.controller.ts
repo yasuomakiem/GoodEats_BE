@@ -4,8 +4,9 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
 import { Request } from 'express';
+import { async } from 'rxjs';
 
-@Controller('product')
+@Controller('api/product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
   private logger = new Logger();
@@ -17,11 +18,11 @@ export class ProductController {
   async getAll(@Req() req: Request): Promise<Product[]> {
     const builder = this.productService
       .queryBuilder('product')
-      .innerJoinAndSelect('product.cate', 'cate');
+      .innerJoinAndSelect('product.res', 'res');
     // this.logger.log(builder.getQuery());
 
-    if (req.query.s) {
-      builder.andWhere(`product.name LIKE '%${req.query.s}%'`);
+    if (req.query.name) {
+      builder.andWhere(`product.name LIKE '%${req.query.name}%'`);
       this.logger.log(builder.getQuery());
     }
 
@@ -35,9 +36,9 @@ export class ProductController {
       this.logger.log(builder.getQuery());
     }
 
-    if (req.query.cate || this.isNum(req.query.cate)) {
-      const cateID = req.query.cate;
-      builder.andWhere(`cate.id = ${cateID}`);
+    if (req.query.res || this.isNum(req.query.res)) {
+      const resId = req.query.res;
+      builder.andWhere(`res.id = ${resId}`);
       this.logger.log(builder.getQuery());
     }
 
@@ -50,19 +51,19 @@ export class ProductController {
       this.logger.log(builder.getQuery());
     }
 
-    // if (req.query.minPrice || req.query.maxPrice) {
-    //   const minPrice = req.query.minPrice ? req.query.minPrice : 0;
-    //   const maxPrice = req.query.maxPrice ? req.query.maxPrice : 100000000;
-    //   builder.where(`product.price BETWEEN ${minPrice} AND ${maxPrice}`);
-    //   this.logger.log(builder.getQuery());
-    // }
+    if (req.query.minPrice || req.query.maxPrice) {
+      const minPrice = req.query.minPrice ? req.query.minPrice : 0;
+      const maxPrice = req.query.maxPrice ? req.query.maxPrice : 100000000;
+      builder.where(`product.price BETWEEN ${minPrice} AND ${maxPrice}`);
+      this.logger.log(builder.getQuery());
+    }
 
     const page: number = parseInt(req.query.page as any) || 1;
     const perPage: number = parseInt(req.query.limit as any) || 8;
 
     builder.offset((page - 1) * perPage).limit(perPage);
 
-    // this.logger.log(builder.getQuery());
+    this.logger.log(builder.getQuery());
     return await builder.getMany();
   }
   // @Post('resId')
@@ -70,22 +71,28 @@ export class ProductController {
   //   return await this.productService.create(resId,createProductDto);
   // }
 
-  @Get()
-  findAll() {
-    return this.productService.findAll();
-  }
+  
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productService.findOne(+id);
+  findOne(@Param('id') id: number) {
+    return this.productService.getByID(id);
   }
+  @Post(':resId')
+  async addProduct(
+    @Param('resId') resId: number,
+    @Body() creatProduct: CreateProductDto){
+      return await this.productService.create(resId,creatProduct)
+    }
 
-  // @Patch(':id/:resId')
-  // async update(@Param('id') id: number,
-  // @Param('resId') resId: number,
-  // @Body() updateProductDto: UpdateProductDto) {
-  //   return await this.productService.update(id,resId, updateProductDto);
-  // }
+  
+
+
+  @Patch(':id/:resId')
+  async update(@Param('id') id: number,
+  @Param('resId') resId: number,
+  @Body() updateProductDto: UpdateProductDto) {
+    return await this.productService.update(id,resId, updateProductDto);
+  }
 
   @Delete(':id')
   remove(@Param('id') id: number) {

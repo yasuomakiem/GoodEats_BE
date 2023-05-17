@@ -22,11 +22,7 @@ export class ProductService {
     return this.productRepository.createQueryBuilder(query);
   }
 
-  getAllProd(): Promise<Product[]> {
-    return this.productRepository.find({
-      relations: ['cates'],
-    });
-  }
+  
 
   getByID(id: number): Promise<Product> {
     return this.productRepository.findOne({
@@ -34,51 +30,37 @@ export class ProductService {
     });
   }
 
-  // getByCateID(cateID: number): Promise<Product[]> {
-  //   const ress = this.restaurantRepository.findOne({
-  //     where: [{ id: cateID }],
-  //   });
-  //   return this.productRepository.find({
-  //     relations: ['cates'],
-  //     where: [{ res: ress[0] }],
-  //   });
-  // }
+  async create(resId: number, prod:CreateProductDto): Promise<Product> {
+    let res = await this.restaurantRepository.findOneBy({ id: resId });
+    if (!res) {
+      throw new HttpException('Restaurant Id not found', HttpStatus.BAD_REQUEST);
+    }
+    const newProd = this.productRepository.create({
+      ...prod,
+      res
+    }
+      
 
-  getDetail(id: number, _slug = ''): Promise<Product[]> {
-    return this.productRepository.find({
-      relations: ['cate'],
-      where: [{ id: id }],
-    });
+    )
+
+    return this.productRepository.save(newProd);
   }
 
-  // async create(resId: number, prod: CreateProductDto): Promise<Product> {
-  //   const ress = await this.restaurantRepository.findOneBy({ id: resId });
-  //   if (!ress) {
-  //     throw new HttpException('Restaurant Id not found', HttpStatus.BAD_REQUEST);
-  //   }
-  //   const newProd = this.productRepository.create({
-  //     ...prod,
-  //     ress,
-  //   });
-
-  //   return this.productRepository.save(newProd);
-  // }
-
-  // async update(
-  //   id: number,
-  //   resId: number,
-  //   prod: UpdateProductDto,
-  // ): Promise<UpdateResult> {
-  //   const cate = await this.restaurantRepository.findOneBy({ id: resId });
-  //   if (!cate) {
-  //     throw new HttpException('Category not found', HttpStatus.BAD_REQUEST);
-  //   }
-  //   const newProd = this.productRepository.create({
-  //     ...prod,
-  //     cate,
-  //   });
-  //   return this.productRepository.update(id, newProd);
-  // }
+  async update(
+    id: number,
+    resId: number,
+    prod: UpdateProductDto,
+  ): Promise<UpdateResult> {
+    const res = await this.restaurantRepository.findOneBy({ id: resId });
+    if (!res) {
+      throw new HttpException('Category not found', HttpStatus.BAD_REQUEST);
+    }
+    const newProd = this.productRepository.create({
+      ...prod,
+      res,
+    });
+    return this.productRepository.update(id, newProd);
+  }
 
   async deleteData(id: number): Promise<DeleteResult> {
     const prod = await this.productRepository.find({
@@ -89,13 +71,7 @@ export class ProductService {
 
   
 
-  findAll() {
-    return `This action returns all product`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
-  }
+  
 
  
 

@@ -22,7 +22,7 @@ export class RestaurantService {
   }
 
   async create(userId: number, createRestaurantDto: CreateRestaurantDto): Promise<Restaurant> {
-    let user = await (await this.userRepository.findOneBy({ id: userId }))
+    let user = await  this.userRepository.findOneBy({ id: userId })
     delete user.username
     delete user.password
     delete user.phone
@@ -64,7 +64,26 @@ export class RestaurantService {
   }
 
 
-  async update(id: number, updateRestaurantDto: UpdateRestaurantDto): Promise<UpdateResult> {
+  async update(id:number ,userId: number, updateRestaurantDto: UpdateRestaurantDto): Promise<UpdateResult> {
+    let user = await (await this.userRepository.findOneBy({ id: userId }))
+    delete user.username
+    delete user.password
+    delete user.phone
+    delete user.email
+    delete user.avata
+    delete user.role
+    delete user.address
+    console.log(user);
+
+
+    if (!user) {
+      throw new HttpException('Not found UserId', HttpStatus.BAD_REQUEST);
+    }
+    const newRes = this.resRepository.create({
+      ...updateRestaurantDto,
+      user
+
+    });
     return await this.resRepository.update(id, updateRestaurantDto);
 
   }

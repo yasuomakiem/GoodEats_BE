@@ -42,10 +42,9 @@ export class Product {
   image: string;
 
   @Column({
-    type: 'tinyint',
-    default: 1,
+    type: 'varchar',    
   })
-  status: number;
+  status: string;
   @Column({
     type: 'text',
     name: 'description',

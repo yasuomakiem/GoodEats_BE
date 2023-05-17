@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Logger } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Logger, Put } from '@nestjs/common';
 import { RestaurantService } from './restaurant.service';
 import { CreateRestaurantDto } from './dto/create-restaurant.dto';
 import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
 import { Restaurant } from './entities/restaurant.entity';
 import { Request } from 'express';
+import { UpdateResult } from 'typeorm';
 
 
 @Controller('api/restaurant')
@@ -66,9 +67,9 @@ export class RestaurantController {
     return await this.restaurantService.create(userId, data)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRestaurantDto: UpdateRestaurantDto) {
-    return this.restaurantService.update(+id, updateRestaurantDto);
+  @Put(':id/:userId')
+  update(@Param('id') id: number,@Param('userId') userId: number, @Body() updateRestaurantDto: UpdateRestaurantDto): Promise<UpdateResult>  {
+    return this.restaurantService.update(id,userId, updateRestaurantDto);
   }
 
   @Delete(':id')

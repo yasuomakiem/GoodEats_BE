@@ -1,21 +1,29 @@
 import { PartialType } from '@nestjs/swagger';
 import { CreateProductDto } from './create-product.dto';
-import { IsNotEmpty, MinLength } from 'class-validator';
+import { IsNotEmpty, IsNumber, Min, MinLength } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {
     @IsNotEmpty()
-    @MinLength(3)
-    name: string;
-  
-    price: number;
-  
-    sale_price: number;
+  @MinLength(3)
+  name: string;
 
-    image: string;
+  @IsNumber()
+  @Min(1)
+  @Type(() => Number)
+  price: number;
 
-    status: string;
+  @Min(0)
+  @Type(() => Number)
+  sale_price: number;
 
-    description:string;  
-  
-   
+  @IsNotEmpty()
+  image: string;
+
+
+  @IsNotEmpty()
+  status: string; 
+
+  description: string; 
+
 }
