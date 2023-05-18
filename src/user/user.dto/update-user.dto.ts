@@ -5,7 +5,7 @@ import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 import { Restaurant } from "src/restaurant/entities/restaurant.entity";
 import { OneToMany } from "typeorm";
 
-export default class UserDto {
+export default class UpdateUserDto {
   @IsNotEmpty()
   @IsString()
   // @Expose()
@@ -13,7 +13,7 @@ export default class UserDto {
 
   @IsNotEmpty()
   // @Expose()
-  address: string;
+  address?: string;
 
   @IsNotEmpty()
   // @Expose()
@@ -32,7 +32,7 @@ export default class UserDto {
 
   @IsNotEmpty()
   // @Transform((value) => value.toString())
-  avata: string;
+  avata?: string;
 
   @IsNotEmpty()
   role: string;

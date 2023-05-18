@@ -2,8 +2,9 @@ import { Controller, Post,Get, Param, Body, Put, Delete } from "@nestjs/common";
 import { UserService } from "./user.service";
 import {UserEntity as User} from './user.entiy/user.entity'
 import * as argon from 'argon2';
-import UserDto from "./user.dto/user.dto";
+import UserDto from "./user.dto/create-user.dto";
 import { DeleteResult, UpdateResult } from "typeorm";
+import UpdateUserDto from "./user.dto/update-user.dto";
 
 
 @Controller('user')
@@ -16,6 +17,7 @@ export class UserController{
     ):Promise<User>{
         const hashedPass = await argon.hash(user.password);
         user.password =hashedPass
+        delete user.confirmpassword
         return this.userService.create(user);
     }
     @Get('profile/:id') 
@@ -26,7 +28,7 @@ export class UserController{
     @Put('edit/:id')
     async updateUser(
         @Param('id') id : number,
-        @Body() user:UserDto
+        @Body() user:UpdateUserDto
     ):Promise<UpdateResult>{
         return await this.userService.update(id,user)
     }
