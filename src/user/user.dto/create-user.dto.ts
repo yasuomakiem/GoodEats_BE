@@ -22,7 +22,7 @@ export default class UserDto {
   confirmpassword: string;
 
  
-  @IsNotEmpty()
+  // @IsNotEmpty()
   phone: string;
 
   @IsNotEmpty()

@@ -14,7 +14,7 @@ export class Order {
         type: 'varchar',
         length: 255,
     })
-    delivered_dddress:string;
+    delivered_address:string;
 
     @Column({
         type: 'varchar',
