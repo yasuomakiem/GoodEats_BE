@@ -31,7 +31,7 @@ export class OrderService {
     delete user.rest
     delete user.role
     if (!user) {
-      throw new HttpException('Not found UserId', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Not found User', HttpStatus.BAD_REQUEST);
     }
     const vou = await this.voucherRepository.findOneBy({ id: voucherId })
     if (!vou) {
