@@ -20,6 +20,8 @@ export class AuthService {
         const acc_found = await this.userRepo.findOne({
             where: [{ username: acc.username }],
         });
+        console.log(acc_found);
+        
 
         if (!acc_found) {
             throw new ForbiddenException('User not found');
@@ -33,7 +35,7 @@ export class AuthService {
         delete acc_found.password;
         console.log(acc_found);
 
-        return await this.setToken(acc_found.username);
+        return await this.setToken(acc_found.id,acc_found.username,acc_found.name,acc_found.role);
 
 
     }
@@ -46,12 +48,15 @@ export class AuthService {
       }
 
 
-    async setToken(username: string): Promise<{
+    async setToken(id:number,username: string,name:string,role:string): Promise<{
         accessToken: string;
         // refreshToken: string;
     }> {
         const payload = {
-            subject: username,
+            subject: id,
+            username:username,
+            name:name,
+            role: role
             
         };
         const accessToken = await this.jwtService.signAsync(payload, {

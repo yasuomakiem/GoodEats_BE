@@ -11,7 +11,7 @@ import UpdateUserDto from "./user.dto/update-user.dto";
 export class UserController{
     constructor(private readonly userService: UserService){}  
 
-    @Post('regiter')
+    @Post('register')
     async createUser(       
         @Body() user:UserDto
     ):Promise<User>{
