@@ -21,8 +21,8 @@ export default class UserDto {
   @IsNotEmpty()
   confirmpassword: string;
 
- 
-  @IsNotEmpty()
+
+  // @IsNotEmpty()
   phone: string;
 
   @IsNotEmpty()

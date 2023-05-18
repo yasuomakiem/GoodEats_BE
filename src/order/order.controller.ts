@@ -7,24 +7,24 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
-  @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.orderService.create(createOrderDto);
+  @Post(':userId/:voucherId')
+  create(
+    @Param('userId') userId:number,
+    @Param('voucherId') voucherId:number,
+    @Body() createOrderDto: CreateOrderDto) {
+    return this.orderService.create(userId,voucherId,createOrderDto);
   }
-
-  @Get()
-  findAll() {
-    return this.orderService.findAll();
-  }
+ 
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.orderService.findOne(+id);
+    return this.orderService.getByUserId(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.orderService.update(+id, updateOrderDto);
+  @Patch(':id/:userId/:voucherId')
+  update(@Param('id')id: number,@Param('userId') userId:number,
+  @Param('voucherId') voucherId:number, @Body() updateOrderDto: UpdateOrderDto) {
+    return this.orderService.update(id,userId,voucherId,updateOrderDto);
   }
 
   @Delete(':id')
