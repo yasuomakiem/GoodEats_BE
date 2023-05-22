@@ -5,6 +5,7 @@ import { plainToClass } from 'class-transformer';
 import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 
+
 @Controller('user')
 export class AuthController{
     constructor(private readonly authService: AuthService){}
