@@ -5,20 +5,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { UserEntity } from 'src/user/user.entiy/user.entity';
 import { Repository } from 'typeorm';
-import { Request } from "express";
 
 @Injectable()
-export class JWTStrategy extends PassportStrategy(Strategy, 'authh') {
+export class JWTStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(
     configService: ConfigService,
-
     @InjectRepository(UserEntity)
     private readonly userRepo: Repository<UserEntity>,
   ) {
     super({
-      jwtFromRequest: ExtractJwt.fromExtractors([(request: Request) => {
-        return request?.cookies?.access_token;
-      }]),
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: configService.get('SECRET_TOKEN_KEY'),
     });
   }

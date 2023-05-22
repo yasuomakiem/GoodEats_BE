@@ -1,11 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Logger, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Logger, Req, UseGuards } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
 import { Request } from 'express';
 import { async } from 'rxjs';
+import { AuthGuard } from '@nestjs/passport'; 
 
+
+// @UseGuards(AuthGuard('jwt'))
 @Controller('api/product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}

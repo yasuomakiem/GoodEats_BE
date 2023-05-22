@@ -1,8 +1,9 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Param, Post, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDTO } from './auth.dto/auth.dto';
 import { plainToClass } from 'class-transformer';
 import { Response } from 'express';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('user')
 export class AuthController{
@@ -18,5 +19,14 @@ export class AuthController{
           access_token && res.cookie('access_token',access_token.accessToken)
 
         return await this.authService.login(validateData);
+    }
+
+    // @UseGuards(AuthGuard('jwt'))
+    @Post('logout')
+    async logOut(@Res({ passthrough: true }) res: Response) {
+        res.clearCookie('access_token');
+        return {
+            message: 'Đăng xuất thành công'
+        }
     }
 }
