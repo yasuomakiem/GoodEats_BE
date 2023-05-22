@@ -13,14 +13,14 @@ export class UserEntity{
     @Column({
         type: 'varchar',
         length: 100,
-        unique: true
+        // unique: true
     })
     name: string;
 
     @Column({
         type: 'varchar',
         length: 100,
-        unique: true
+        // unique: true
     })
     address: string;
 
@@ -55,7 +55,7 @@ export class UserEntity{
     @Column({
         type: 'varchar',
         length: 11,
-        unique: true
+        // unique: true
     })
     avata: string;
 
