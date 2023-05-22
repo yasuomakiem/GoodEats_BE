@@ -1,10 +1,11 @@
-import { Controller, Post,Get, Param, Body, Put, Delete } from "@nestjs/common";
+import { Controller, Post,Get, Param, Body, Put, Delete,UseGuards } from "@nestjs/common";
 import { UserService } from "./user.service";
 import {UserEntity as User} from './user.entiy/user.entity'
 import * as argon from 'argon2';
 import UserDto from "./user.dto/create-user.dto";
 import { DeleteResult, UpdateResult } from "typeorm";
 import UpdateUserDto from "./user.dto/update-user.dto";
+// import { AccessTokenGuard } from "src/auth/guards/accesstoken.guard";
 
 
 @Controller('user')
@@ -25,11 +26,14 @@ export class UserController{
       return this.userService.getUser(id);
     }
 
+    // @UseGuards(AccessTokenGuard)
     @Put('edit/:id')
     async updateUser(
         @Param('id') id : number,
         @Body() user:UpdateUserDto
     ):Promise<UpdateResult>{
+        const hashedPass = await argon.hash(user.password);
+        user.password =hashedPass
         return await this.userService.update(id,user)
     }
 

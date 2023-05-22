@@ -8,10 +8,9 @@ import { Repository } from 'typeorm';
 import { Request } from "express";
 
 @Injectable()
-export class JWTStrategy extends PassportStrategy(Strategy, 'authh') {
+export class JWTStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(
     configService: ConfigService,
-
     @InjectRepository(UserEntity)
     private readonly userRepo: Repository<UserEntity>,
   ) {

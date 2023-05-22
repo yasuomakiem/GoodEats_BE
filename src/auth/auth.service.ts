@@ -6,6 +6,8 @@ import { Repository } from 'typeorm';
 import { AuthDTO } from './auth.dto/auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import * as bcrypt from "bcrypt"
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -68,6 +70,14 @@ export class AuthService {
             //   refreshToken,
         };
     }
+
+   async logout(res:Response,req:Request){
+    res.clearCookie('access_token')   
+
+        // await this.userRepo.clear()
+
+   }
+   
 
     
 
