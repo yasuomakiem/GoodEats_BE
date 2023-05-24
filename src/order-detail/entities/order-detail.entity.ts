@@ -12,13 +12,15 @@ export class OrderDetail {
     id: number;
 
     @Column({
-        type: 'int'
+        type: 'varchar',
+
     })
-    quantity: number
+    quantity: string
     @Column({
-        type: 'float'
+        type: 'varchar',
+
     })
-    price: number
+    price: string
 
     @ManyToOne(()=> Product,(prod)=> prod.orddt)
     prod: Product

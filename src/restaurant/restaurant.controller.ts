@@ -54,6 +54,10 @@ export class RestaurantController {
 
     return await builder.getMany();
   }
+  @Get('user/:id')
+  async getByUserId(@Param('id') id: number): Promise<Restaurant[]>{
+    return await this.restaurantService.getbyUserId(id);
+  }
 
   @Get(":id")
   async getByID(@Param('id') id: number): Promise<Restaurant> {

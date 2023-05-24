@@ -7,12 +7,18 @@ import { UpdateOrderDetailDto } from './dto/update-order-detail.dto';
 export class OrderDetailController {
   constructor(private readonly orderDetailService: OrderDetailService) {}
 
-  @Post()
+  @Post(':productId/:orderId')
   create(
     @Param('productId') productId:number,
     @Param('orderId') orderId:number,
     @Body() createOrderDetailDto: CreateOrderDetailDto) {
     return this.orderDetailService.create(productId,orderId,createOrderDetailDto);
+  }
+
+  @Patch(':id/:productId/:orderId')
+  update(@Param('id') id: number, @Param('productId') productId:number,
+    @Param('orderId') orderId:number, @Body() updateOrderDetailDto: UpdateOrderDetailDto) {
+    return this.orderDetailService.update(id,productId,orderId, updateOrderDetailDto);
   }
 
   @Get()
@@ -22,13 +28,10 @@ export class OrderDetailController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.orderDetailService.findOne(+id);
+    return this.orderDetailService.getByOrderId(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDetailDto: UpdateOrderDetailDto) {
-    return this.orderDetailService.update(+id, updateOrderDetailDto);
-  }
+  
 
   @Delete(':id')
   remove(@Param('id') id: string) {

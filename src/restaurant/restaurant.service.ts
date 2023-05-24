@@ -50,6 +50,22 @@ export class RestaurantService {
     });
   }
 
+  async getbyUserId(id:number):Promise<Restaurant[]>{
+    const user = await this.userRepository.findOne({
+      where: [{id:id}]
+    });
+    const restaurant = await this.resRepository.find({
+      relations:{
+        user:true,
+        vc:true,
+        prod:true 
+      },
+      where: [{user}]
+    })
+    return restaurant
+
+  }
+
   // async findAll():Promise<Restaurant[]> {
   //   return await this.resRepository.find({relations:['users']});
   // }
