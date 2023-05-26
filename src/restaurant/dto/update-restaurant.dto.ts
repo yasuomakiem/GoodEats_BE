@@ -20,6 +20,6 @@ export class UpdateRestaurantDto extends PartialType(CreateRestaurantDto) {
   @IsNotEmpty()
   phone: string;
 
-  @IsNotEmpty()
+  // @IsNotEmpty()
   avata: string;
 }
