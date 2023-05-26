@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { Card } from 'src/card/entity/card.entity';
 import { OrderDetail } from 'src/order-detail/entities/order-detail.entity';
 import { Restaurant } from 'src/restaurant/entities/restaurant.entity';
 import { Column, Entity, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
@@ -53,7 +54,9 @@ export class Product {
 
 
   @OneToMany(() => OrderDetail, (orddt) => orddt.prod)
-  orddt: OrderDetail
+  orddt: OrderDetail[]
+  @OneToMany(() => Card, (card) => card.prod)
+  card: Card[]
 
   
   @ManyToOne(() => Restaurant, (res) => res.prod)

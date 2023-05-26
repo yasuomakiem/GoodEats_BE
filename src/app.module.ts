@@ -11,6 +11,7 @@ import { ProductModule } from './product/product.module';
 import { VoucherModule } from './voucher/voucher.module';
 import { OrderModule } from './order/order.module';
 import { OrderDetailModule } from './order-detail/order-detail.module';
+import { CardModule } from './card/card.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -35,7 +36,9 @@ import { OrderDetailModule } from './order-detail/order-detail.module';
     ProductModule,
     VoucherModule,
     OrderModule,
-    OrderDetailModule
+    OrderDetailModule,
+    CardModule
+    
   ],
   controllers: [AppController],
   providers: [AppService,JWTStrategy],
