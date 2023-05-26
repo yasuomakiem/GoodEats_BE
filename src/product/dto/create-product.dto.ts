@@ -16,14 +16,14 @@ export class CreateProductDto {
   @Type(() => Number)
   sale_price: number;
 
-  @IsNotEmpty()
+  // @IsNotEmpty()
   image: string;
 
 
   @IsNotEmpty()
   status: string; 
 
-  description: string; 
+
 
 
  

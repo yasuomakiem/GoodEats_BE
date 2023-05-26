@@ -25,7 +25,6 @@ export class OrderDetailService {
       throw new HttpException('Not found Product', HttpStatus.BAD_REQUEST);
     }
     delete prod.image
-    delete prod.description
     const ord = await this.orderRepository.findOneBy({ id: orderId })
     if (!ord) {
       throw new HttpException('Not found Order', HttpStatus.BAD_REQUEST);
@@ -46,7 +45,6 @@ export class OrderDetailService {
       throw new HttpException('Not found Product', HttpStatus.BAD_REQUEST);
     }
     delete prod.image
-    delete prod.description
     const ord = await this.orderRepository.findOneBy({ id: orderId })
     if (!ord) {
       throw new HttpException('Not found Order', HttpStatus.BAD_REQUEST);

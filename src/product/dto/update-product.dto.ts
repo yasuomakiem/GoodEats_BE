@@ -17,13 +17,13 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
   @Type(() => Number)
   sale_price: number;
 
-  @IsNotEmpty()
+  // @IsNotEmpty()
   image: string;
 
 
   @IsNotEmpty()
   status: string; 
 
-  description: string; 
+
 
 }

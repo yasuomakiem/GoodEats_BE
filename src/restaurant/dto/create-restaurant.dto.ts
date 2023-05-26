@@ -17,7 +17,7 @@ export class CreateRestaurantDto {
   @IsNotEmpty()
   phone: string;
 
-  @IsNotEmpty()
+  // @IsNotEmpty()
   avata: string;
   
   

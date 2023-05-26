@@ -50,7 +50,7 @@ export class Product {
     name: 'description',
 
   })
-  description: string; 
+
 
   @OneToMany(() => OrderDetail, (orddt) => orddt.prod)
   orddt: OrderDetail
