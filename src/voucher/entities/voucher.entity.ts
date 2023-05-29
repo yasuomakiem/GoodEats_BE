@@ -21,9 +21,15 @@ export class Voucher{
     @Column({
         type: 'varchar',
         length: 11,
-        unique: true
+        // unique: true
     })
     discout: number;
+    @Column({
+        type: 'varchar',
+        length: 11,
+        // unique: true
+    })
+    status: string;
   
 
     @ManyToOne(() => Restaurant, (restaurant) => restaurant.vc)

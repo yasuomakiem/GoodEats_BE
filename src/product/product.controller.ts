@@ -24,6 +24,7 @@ export class ProductController {
       .innerJoinAndSelect('product.res', 'res');
     // this.logger.log(builder.getQuery());
 
+
     if (req.query.name) {
       builder.andWhere(`product.name LIKE '%${req.query.name}%'`);
       this.logger.log(builder.getQuery());
@@ -36,13 +37,19 @@ export class ProductController {
         `product.${sortArr[0]}`,
         sortArr[1] == 'ASC' ? 'ASC' : 'DESC',
       );
-      this.logger.log(builder.getQuery());
+      // this.logger.log(builder.getQuery());
+    }
+    if (req.query.status || this.isNum(req.query.status)) {
+      const status = req.query.status;
+      builder.andWhere(`product.status != 'delete'`);
+
+      // this.logger.log(builder.getQuery());
     }
 
     if (req.query.res || this.isNum(req.query.res)) {
       const resId = req.query.res;
       builder.andWhere(`res.id = ${resId}`);
-      this.logger.log(builder.getQuery());
+      // this.logger.log(builder.getQuery());
     }
 
     if (req.query.price) {
@@ -51,22 +58,27 @@ export class ProductController {
       const start = priceArr[0] ? priceArr[0] : 0;
       const end = priceArr[1] ? priceArr[1] : 100000000;
       builder.andWhere(`product.price BETWEEN ${start} AND ${end}`);
-      this.logger.log(builder.getQuery());
+      // this.logger.log(builder.getQuery());
     }
 
     if (req.query.minPrice || req.query.maxPrice) {
       const minPrice = req.query.minPrice ? req.query.minPrice : 0;
       const maxPrice = req.query.maxPrice ? req.query.maxPrice : 100000000;
       builder.where(`product.price BETWEEN ${minPrice} AND ${maxPrice}`);
-      this.logger.log(builder.getQuery());
+      // this.logger.log(builder.getQuery());
+    }
+    if (req.query.page || this.isNum(req.query.page)) {
+      const page =  parseInt(req.query.page as any) || 1
+      const perPage: number = parseInt(req.query.limit as any) || 6;
+
+      builder.offset((page - 1) * perPage).limit(perPage);
+      // this.logger.log(builder.getQuery());
     }
 
-    const page: number = parseInt(req.query.page as any) || 1;
-    const perPage: number = parseInt(req.query.limit as any) || 6;
 
-    builder.offset((page - 1) * perPage).limit(perPage);
+    // this.logger.log(builder.getQuery());
+    builder.andWhere(`product.status != 'delete'`);
 
-    this.logger.log(builder.getQuery());
     return await builder.getMany();
   }
   // @Post('resId')
