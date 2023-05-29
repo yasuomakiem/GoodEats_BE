@@ -3,7 +3,7 @@ import { CreateOrderDetailDto } from './dto/create-order-detail.dto';
 import { UpdateOrderDetailDto } from './dto/update-order-detail.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OrderDetail } from './entities/order-detail.entity';
-import { Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Product } from 'src/product/entities/product.entity';
 import { Order } from 'src/order/entities/order.entity';
 
@@ -84,7 +84,8 @@ export class OrderDetailService {
 
   
 
-  remove(id: number) {
-    return `This action removes a #${id} orderDetail`;
+  async deleteProduct(id:number):Promise<DeleteResult>{
+    return await this.orderDetailRespository.delete(id)
   }
+
 }

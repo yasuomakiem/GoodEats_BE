@@ -51,6 +51,7 @@ export class RestaurantController {
       builder.andWhere(`restaurant.user = ${userId}`);
       this.logger.log(builder.getQuery());
     }
+    
 
     return await builder.getMany();
   }

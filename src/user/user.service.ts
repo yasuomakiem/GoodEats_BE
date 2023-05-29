@@ -13,8 +13,14 @@ export class UserService{
         private readonly userRepository: Repository<User> 
     ){}  
     
-    async getUser(id:number): Promise<User> {
-        return await this.userRepository.findOne({where: {id: id}}  )
+    async getUser(id:number): Promise<User[]> {
+        return await this.userRepository.find({
+            relations:{
+                ord:true,
+                card:true,
+                
+              },
+            where: {id: id}}  )
         
        
       }

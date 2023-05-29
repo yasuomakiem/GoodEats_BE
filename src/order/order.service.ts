@@ -79,7 +79,10 @@ export class OrderService {
     
     const orders = await this.orderRepository.find({
       relations: {
-        user: true
+        user: true,
+        vou:true,
+        orddt:true
+
       },
       where: [{ user }]
     });
@@ -88,6 +91,7 @@ export class OrderService {
     return orders;
 
   }
+   
 
 
   async remove(id: number): Promise<DeleteResult> {

@@ -1,4 +1,5 @@
 import { Res } from "@nestjs/common";
+import { Card } from "src/card/entity/card.entity";
 import { Order } from "src/order/entities/order.entity";
 import { Restaurant } from "src/restaurant/entities/restaurant.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
@@ -71,4 +72,7 @@ export class UserEntity{
 
     @OneToMany(()=> Order, (ord)=> ord.user)
     ord: Order[]
+
+    @OneToMany(()=> Card, (card)=> card.user)
+    card: Card[]
 }
