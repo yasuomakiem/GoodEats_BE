@@ -16,7 +16,7 @@ export class CardController {
         return this.cardService.create(prodId, userId,resId, CreateCardlDto);
     }
 
-    @Patch(':id/:prodId/:userId')
+    @Patch(':id/:prodId/:userId/:resId')
     update(
         @Param('id') id:number,
         @Param('prodId') prodId:number,
