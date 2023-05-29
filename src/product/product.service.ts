@@ -26,6 +26,7 @@ export class ProductService {
 
   getByID(id: number): Promise<Product> {
     return this.productRepository.findOne({
+      relations:{res:true},
       where: [{ id: id }],
     });
   }

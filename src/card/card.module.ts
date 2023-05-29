@@ -5,12 +5,14 @@ import { ProductModule } from "src/product/product.module";
 import { UserModule } from "src/user/user.module";
 import { CardController } from "./card.controller";
 import { CardService } from "./card.service";
+import { RestaurantModule } from "src/restaurant/restaurant.module";
 
 @Module({
     imports:[
         TypeOrmModule.forFeature([Card]),
         forwardRef(()=>ProductModule),
-        forwardRef(()=>UserModule)
+        forwardRef(()=>UserModule),
+        forwardRef(()=>RestaurantModule)
     ],
     controllers:[CardController],
     providers: [CardService],

@@ -5,4 +5,6 @@ export class CreateCardlDto {
     @IsString()
     @IsNotEmpty()
     quantity
+
+    
 }

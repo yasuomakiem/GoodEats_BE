@@ -22,7 +22,7 @@ export class UserController{
         return this.userService.create(user);
     }
     @Get('profile/:id') 
-    public getUser(@Param('id') id: number): Promise<User> {
+    public getUser(@Param('id') id: number): Promise<User[]> {
       return this.userService.getUser(id);
     }
 
