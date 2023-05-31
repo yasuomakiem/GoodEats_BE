@@ -6,6 +6,7 @@ import { Order } from './entities/order.entity';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { UserEntity } from 'src/user/user.entiy/user.entity';
 import { Voucher } from 'src/voucher/entities/voucher.entity';
+import { Restaurant } from 'src/restaurant/entities/restaurant.entity';
 
 @Injectable()
 export class OrderService {
@@ -17,7 +18,11 @@ export class OrderService {
     private readonly userRepository: Repository<UserEntity>,
 
     @InjectRepository(Voucher)
-    private readonly voucherRepository: Repository<Voucher>
+    private readonly voucherRepository: Repository<Voucher>,
+
+    @InjectRepository(Restaurant)
+    private readonly resRepository: Repository<Restaurant>
+
   ) { }
   async create(userId: number, voucherId: number, createOrderDto: CreateOrderDto): Promise<Order> {
     const user = await this.userRepository.findOneBy({ id: userId })
@@ -65,11 +70,22 @@ export class OrderService {
       throw new HttpException('Not found Voucher', HttpStatus.BAD_REQUEST);
     }
     const newOrder = this.orderRepository.create({
-      ...CreateOrderDto,
+      ...updateOrderDto,
       user,
       vou
     })
     return this.orderRepository.update(id, newOrder);
+  }
+
+  async getAllOrder():Promise<Order[]>{
+    return this.orderRepository.find({ relations: {
+      
+      res:true,
+    
+
+      // orddt:true
+
+    }})
   }
 
   async getByUserId(userId: number): Promise<Order[]> {
@@ -81,7 +97,7 @@ export class OrderService {
       relations: {
         user: true,
         vou:true,
-        orddt:true
+        // orddt:true
 
       },
       where: [{ user }]
@@ -91,7 +107,25 @@ export class OrderService {
     return orders;
 
   }
-   
+    async getByResId(resId:number):Promise<Order[]>{
+      const res = await this.resRepository.findOne({ where:[{id: resId}]})
+
+      const orders = await this.orderRepository.find({
+        relations: {
+          user: true,
+          res:true,
+        vou:true,
+
+          // orddt:true
+  
+        },
+        where: [{ res }]
+
+      })
+    return orders;
+
+    }
+    
 
 
   async remove(id: number): Promise<DeleteResult> {

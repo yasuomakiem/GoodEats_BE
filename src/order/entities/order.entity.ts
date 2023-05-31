@@ -1,4 +1,5 @@
 import { OrderDetail } from "src/order-detail/entities/order-detail.entity";
+import { Restaurant } from "src/restaurant/entities/restaurant.entity";
 import { UserEntity } from "src/user/user.entiy/user.entity";
 import { Voucher } from "src/voucher/entities/voucher.entity";
 import { Column, Entity, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
@@ -9,6 +10,11 @@ export class Order {
         type: 'int',
     })
     id: number;
+    @Column({
+        type: 'varchar',
+        length: 255,
+    })
+    delivered_name:string;
 
     @Column({
         type: 'varchar',
@@ -27,6 +33,11 @@ export class Order {
         length:20
     })
     status: string;
+    @Column({
+        type: 'varchar',
+        length:20
+    })
+    totalQuantity: string
 
     @ManyToOne(()=> Voucher, (vou) => vou.ord)
     vou: Voucher;
@@ -36,5 +47,8 @@ export class Order {
 
     @OneToMany(()=> OrderDetail, (orddt)=> orddt.ord)
     orddt: OrderDetail[];
+
+    @ManyToOne(()=> Restaurant,(res)=> res.order)
+    res: Restaurant
     
 }   

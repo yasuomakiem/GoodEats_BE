@@ -1,6 +1,10 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsString, isNotEmpty } from "class-validator";
 
 export class CreateOrderDto {
+    @IsNotEmpty()
+    @IsString()
+    delivered_name
+
     @IsNotEmpty()
     @IsString()
     delivered_address
@@ -12,4 +16,7 @@ export class CreateOrderDto {
     @IsNotEmpty()
     @IsString()
     status
+
+    @IsNotEmpty()
+    totalQuantity
 }

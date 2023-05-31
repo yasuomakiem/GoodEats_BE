@@ -3,6 +3,7 @@ import { Column, Entity, PrimaryGeneratedColumn, OneToMany, OneToOne, ManyToOne 
 import {Voucher} from 'src/voucher/entities/voucher.entity'
 import { Product } from 'src/product/entities/product.entity';
 import { Card } from 'src/card/entity/card.entity';
+import { Order } from 'src/order/entities/order.entity';
 @Entity({
   name: 'restaurant',
 })
@@ -58,5 +59,7 @@ export class Restaurant {
     @OneToMany(() => Card, (cart) => cart.res)
     cart: Voucher[]
 
+    @OneToMany(() => Order, (cart) => cart.res)
+    order: Order[]
 
 }

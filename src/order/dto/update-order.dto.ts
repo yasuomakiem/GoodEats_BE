@@ -5,6 +5,10 @@ import { IsNotEmpty, IsString } from 'class-validator';
 export class UpdateOrderDto extends PartialType(CreateOrderDto) {
     @IsNotEmpty()
     @IsString()
+    delivered_name
+
+    @IsNotEmpty()
+    @IsString()
     delivered_address
 
     @IsNotEmpty()
@@ -14,4 +18,8 @@ export class UpdateOrderDto extends PartialType(CreateOrderDto) {
     @IsNotEmpty()
     @IsString()
     status
+
+    @IsNotEmpty()
+    totalQuantity
+   
 }

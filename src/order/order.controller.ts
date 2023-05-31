@@ -15,10 +15,18 @@ export class OrderController {
     return this.orderService.create(userId,voucherId,createOrderDto);
   }
  
+  @Get()
+  getAll(){
+    return this.orderService.getAllOrder()
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.orderService.getByUserId(+id);
+  }
+  @Get('res/:id')
+  findByRes(@Param('id') id: string) {
+    return this.orderService.getByResId(+id);
   }
 
   @Patch(':id/:userId/:voucherId')

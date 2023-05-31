@@ -25,6 +25,11 @@ export class CardService{
         
     ){}
 
+    queryBuilder(query: string) {
+      return this.cardRespository.createQueryBuilder(query);
+    }
+  
+   
 
     async create(prodId:number,userId:number,resId:number,data: CreateCardlDto) {
         const  prod = await this.productRespository.findOneBy({id:prodId})
@@ -104,8 +109,9 @@ export class CardService{
     
     
       }
-      async getByResId(resId:number):Promise<Card[]>{
+      async getByResId(userId:number,resId:number):Promise<Card[]>{
         const res = await this.resRepository.findOne({where:{id:resId}})
+        const user = await this.resRepository.findOne({where:{id:userId}})
         const card = await this.cardRespository.find({
           relations:{            
             prod:true,
@@ -116,7 +122,8 @@ export class CardService{
             
         
           },
-          where: [{res},]
+          where: [{user},{res},]
+
         })
         return card;
       }
@@ -124,5 +131,5 @@ export class CardService{
       async deleteProduct(id:number):Promise<DeleteResult>{
         return await this.cardRespository.delete(id)
       }
-    
+     
 }
