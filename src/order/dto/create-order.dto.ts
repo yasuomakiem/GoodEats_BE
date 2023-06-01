@@ -19,4 +19,10 @@ export class CreateOrderDto {
 
     @IsNotEmpty()
     totalQuantity
+
+    
+    @IsNotEmpty()
+    createAt
+    @IsNotEmpty()
+    updateAt
 }

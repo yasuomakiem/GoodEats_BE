@@ -7,20 +7,24 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
-  @Post(':userId/:voucherId')
+  @Post(':userId/:resId')
   create(
     @Param('userId') userId:number,
-    @Param('voucherId') voucherId:number,
+    @Param('resId') resId:number,
+    
     @Body() createOrderDto: CreateOrderDto) {
-    return this.orderService.create(userId,voucherId,createOrderDto);
+    return this.orderService.create(userId,resId,createOrderDto);
   }
  
   @Get()
   getAll(){
     return this.orderService.getAllOrder()
   }
-
   @Get(':id')
+  getOrder(@Param('id')id: number){
+    return this.orderService.getOrder(id)
+  }
+  @Get('user/:id')
   findOne(@Param('id') id: string) {
     return this.orderService.getByUserId(+id);
   }
@@ -29,10 +33,10 @@ export class OrderController {
     return this.orderService.getByResId(+id);
   }
 
-  @Patch(':id/:userId/:voucherId')
-  update(@Param('id')id: number,@Param('userId') userId:number,
-  @Param('voucherId') voucherId:number, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.orderService.update(id,userId,voucherId,updateOrderDto);
+  @Patch(':id/:userId/:resId')
+  update(@Param('id')id: number,@Param('userId') userId:number,@Param('resId') resId:number,
+  @Body() updateOrderDto: UpdateOrderDto) {
+    return this.orderService.update(id,userId,resId,updateOrderDto);
   }
 
   @Delete(':id')

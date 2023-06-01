@@ -35,7 +35,7 @@ export class Voucher{
     @ManyToOne(() => Restaurant, (restaurant) => restaurant.vc)
     res: Restaurant;
 
-    @OneToMany(()=>Order, (ord) => ord.vou)
-    ord: Order
+    // @OneToMany(()=>Order, (ord) => ord.vou)
+    // ord: Order
 
 }

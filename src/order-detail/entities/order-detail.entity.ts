@@ -16,11 +16,11 @@ export class OrderDetail {
 
     })
     quantity: string
-    @Column({
-        type: 'varchar',
+    // @Column({
+    //     type: 'varchar',
 
-    })
-    price: string
+    // })
+    // price: string
 
     @ManyToOne(()=> Product,(prod)=> prod.orddt)
     prod: Product

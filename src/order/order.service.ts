@@ -24,7 +24,7 @@ export class OrderService {
     private readonly resRepository: Repository<Restaurant>
 
   ) { }
-  async create(userId: number, voucherId: number, createOrderDto: CreateOrderDto): Promise<Order> {
+  async create(userId: number,resId:number, createOrderDto: CreateOrderDto): Promise<Order> {
     const user = await this.userRepository.findOneBy({ id: userId })
     delete user.password
     delete user.address
@@ -38,20 +38,23 @@ export class OrderService {
     if (!user) {
       throw new HttpException('Not found User', HttpStatus.BAD_REQUEST);
     }
-    const vou = await this.voucherRepository.findOneBy({ id: voucherId })
-    if (!vou) {
-      throw new HttpException('Not found Voucher', HttpStatus.BAD_REQUEST);
-    }
+    const res = await this.userRepository.findOneBy({ id: resId })
+
+    // const vou = await this.voucherRepository.findOneBy({ id: voucherId })
+    // if (!vou) {
+    //   throw new HttpException('Not found Voucher', HttpStatus.BAD_REQUEST);
+    // }
     const newOrder = this.orderRepository.create({
       ...createOrderDto,
       user,
-      vou
+      res
+      // vou
     })
 
     return this.orderRepository.save(newOrder);
   }
 
-  async update(id: number, userId: number, voucherId: number, updateOrderDto: UpdateOrderDto): Promise<UpdateResult> {
+  async update(id: number, userId: number,resId:number, updateOrderDto: UpdateOrderDto): Promise<UpdateResult> {
     const user = await this.userRepository.findOneBy({ id: userId })
     delete user.password
     delete user.address
@@ -65,14 +68,17 @@ export class OrderService {
     if (!user) {
       throw new HttpException('Not found UserId', HttpStatus.BAD_REQUEST);
     }
-    const vou = await this.voucherRepository.findOneBy({ id: voucherId })
-    if (!vou) {
-      throw new HttpException('Not found Voucher', HttpStatus.BAD_REQUEST);
-    }
+    // const vou = await this.voucherRepository.findOneBy({ id: voucherId })
+    // if (!vou) {
+    //   throw new HttpException('Not found Voucher', HttpStatus.BAD_REQUEST);
+    // }
+    const res = await this.userRepository.findOneBy({ id: resId })
+
     const newOrder = this.orderRepository.create({
       ...updateOrderDto,
       user,
-      vou
+      res
+      // vou
     })
     return this.orderRepository.update(id, newOrder);
   }
@@ -96,7 +102,7 @@ export class OrderService {
     const orders = await this.orderRepository.find({
       relations: {
         user: true,
-        vou:true,
+        // vou:true,
         // orddt:true
 
       },
@@ -107,6 +113,15 @@ export class OrderService {
     return orders;
 
   }
+
+  async getOrder(id:number):Promise<Order[]>{
+    return await this.orderRepository.find({
+      relations:{
+        orddt:true
+        },
+      where: {id: id}}  )
+
+  }
     async getByResId(resId:number):Promise<Order[]>{
       const res = await this.resRepository.findOne({ where:[{id: resId}]})
 
@@ -114,7 +129,7 @@ export class OrderService {
         relations: {
           user: true,
           res:true,
-        vou:true,
+        // vou:true,
 
           // orddt:true
   

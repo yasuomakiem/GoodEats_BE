@@ -37,10 +37,23 @@ export class Order {
         type: 'varchar',
         length:20
     })
-    totalQuantity: string
+    totalQuantity: string;
+    @Column({
+        type: 'varchar',
+        length:50
+    })
+    createAt: string;
+    @Column({
+        type: 'varchar',
+        length:50
+    })
+    updateAt: string
 
-    @ManyToOne(()=> Voucher, (vou) => vou.ord)
-    vou: Voucher;
+
+
+
+    // @ManyToOne(()=> Voucher, (vou) => vou.ord)
+    // vou: Voucher;
 
     @ManyToOne(()=> UserEntity, (user)=> user.ord)
     user: UserEntity;

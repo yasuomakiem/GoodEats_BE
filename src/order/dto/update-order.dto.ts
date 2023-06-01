@@ -21,5 +21,11 @@ export class UpdateOrderDto extends PartialType(CreateOrderDto) {
 
     @IsNotEmpty()
     totalQuantity
+    
+    @IsNotEmpty()
+    createAt
+
+    @IsNotEmpty()
+    updateAt
    
 }
