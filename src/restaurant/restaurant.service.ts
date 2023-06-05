@@ -58,7 +58,8 @@ export class RestaurantService {
       relations:{
         user:true,
         vc:true,
-        prod:true 
+        prod:true,
+        order:true
       },
       where: [{user}]
     })
@@ -72,7 +73,12 @@ export class RestaurantService {
 
   async getAllByID(id: number): Promise<Restaurant> {
     return await this.resRepository.findOne({
-      relations: [ 'vc', "prod"],
+      relations:{
+        user:true,
+        vc:true,
+        prod:true,
+        order:true
+      },
       where: [{
         id: id
       }]

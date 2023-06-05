@@ -3,29 +3,20 @@ import { CreateOrderDto } from './create-order.dto';
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class UpdateOrderDto extends PartialType(CreateOrderDto) {
-    @IsNotEmpty()
-    @IsString()
-    delivered_name
+    delivered_name?:string
 
-    @IsNotEmpty()
-    @IsString()
-    delivered_address
+    delivered_address?:string
 
+    delivered_phone?:string
     @IsNotEmpty()
-    @IsString()
-    delivered_phone
-
-    @IsNotEmpty()
-    @IsString()
-    status
-
-    @IsNotEmpty()
-    totalQuantity
     
-    @IsNotEmpty()
-    createAt
+    status:string
+
+    totalQuantity?:string
+    
+    createAt?:string
 
     @IsNotEmpty()
-    updateAt
+    updateAt:string
    
 }

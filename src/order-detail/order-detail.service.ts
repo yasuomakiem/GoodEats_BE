@@ -64,7 +64,7 @@ export class OrderDetailService {
     const ordt = await this.orderDetailRespository.find({
       relations:{
         ord:true,
-        prod:true
+        prod:true,
     
       },
       where: [{ord},]

@@ -117,7 +117,9 @@ export class OrderService {
   async getOrder(id:number):Promise<Order[]>{
     return await this.orderRepository.find({
       relations:{
-        orddt:true
+        orddt:true,
+        res:true,
+        user:true        
         },
       where: {id: id}}  )
 
