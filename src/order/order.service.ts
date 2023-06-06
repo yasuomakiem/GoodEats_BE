@@ -38,7 +38,7 @@ export class OrderService {
     if (!user) {
       throw new HttpException('Not found User', HttpStatus.BAD_REQUEST);
     }
-    const res = await this.userRepository.findOneBy({ id: resId })
+    const res = await this.resRepository.findOneBy({ id: resId })
 
     // const vou = await this.voucherRepository.findOneBy({ id: voucherId })
     // if (!vou) {
