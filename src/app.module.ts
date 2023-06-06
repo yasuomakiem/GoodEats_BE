@@ -12,6 +12,7 @@ import { VoucherModule } from './voucher/voucher.module';
 import { OrderModule } from './order/order.module';
 import { OrderDetailModule } from './order-detail/order-detail.module';
 import { CardModule } from './card/card.module';
+import { UpdateStatusModule } from './update-status/update-status.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -37,7 +38,8 @@ import { CardModule } from './card/card.module';
     VoucherModule,
     OrderModule,
     OrderDetailModule,
-    CardModule
+    CardModule,
+    UpdateStatusModule
     
   ],
   controllers: [AppController],
